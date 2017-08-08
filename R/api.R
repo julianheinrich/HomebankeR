@@ -1,6 +1,5 @@
-#' @export
 #' @import dplyr
-testData <- function() {
+compile_test_data <- function() {
   # SEPA data as output from the FinTS parser
   giro_dkb1 <- parse_fints("data-raw/DE62120300001002824108.csv") %>%
     mutate(Konto = "1002824108")
