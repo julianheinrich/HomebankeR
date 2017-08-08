@@ -17,9 +17,50 @@
 <script src="bootstrap-3.3.7-dist/js/bootstrap.js"> </script>
 <script src="jquery-ui-1.12.1/jquery-ui.js"> </script>
 
+<script src="d3/d3.min.js"> </script>
 
 <script>
+$(function() {
 
+  // set development port
+  ocpu.seturl("//localhost:5656/ocpu/library/HomebankeR/R");
+
+  // create table
+  var column_names = ["Belegdatum", "Beschreibung", "Betrag", "Konto"];
+  d3.select("body").append("div")
+    .attr("id", "container").append("div")
+    .attr("id", "Table");
+
+  var table = d3.select("#Table").append("table");
+  table.append("thead").append("tr");
+
+  var headers = table.select("tr").selectAll("th")
+    .data(column_names)
+    .enter()
+    .append("th")
+    .text(function(d) { return d; });
+
+  // d3.select("#id")
+
+  // load test data from server
+  d3.json("http://localhost:5656/ocpu/library/HomebankeR/R/data/json", function(data) {
+    var rows = table.append("tbody").selectAll("tr")
+      .data(data);
+
+    rows.enter()
+      .append("tr")
+      .selectAll("td")
+      .data(function(d) {
+        return [d.Belegdatum, d.Beschreibung, d.Betrag, d.Konto];
+      })
+      .enter()
+      .append("td")
+      .text(function(d) { return d; });
+
+    // rows.selectAll("td")
+  });
+
+})
 
 </script>
 
